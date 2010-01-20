@@ -1,0 +1,86 @@
+NAME
+    Lingua::ZH::PinyinConvert::ID - Convert between Hanyu Pinyin and
+    Indonesian transliteration
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+        use Lingua::ZH::PinyinConvert::ID;
+
+        my $conv = Lingua::ZH::PinyinConvert::ID;
+
+        # convert Hanyu pinyin to Indonesian pinyin
+
+        my $id = $conv->hanyu2id("zhongwen"); # "cungwen"
+           $id = $conv->hanyu2id("zhong1 wen2"); # "cung1 wen2"
+
+        # convert Indonesian pinyin to Hanyu pinyin, if possible. if
+        # ambiguous, then will return undef.
+
+        my $hanyu = $conv->id2hanyu("i sheng"); # "yi sheng"
+           $hanyu = $conv->id2hanyu("ce"); # undef, ambiguous between ze/zhe/zhi/zi
+           $hanyu = $conv->id2hanyu("ce", {list_all=>1}); "(ze|zhe|zhi|zi)"
+
+        # detect Hanyu pinyin or Indonesian pinyin in text. return
+        # "hanyu", "id", "neither", or "ambiguous".
+        print $conv->detect("x"); # "neither"
+        print $conv->detect("wo de xin"); # "hanyu"
+        print $conv->detect("wo de sin"); # "id"
+        print $conv->detect("wo ai ni"); # "ambiguous"
+
+DESCRIPTION
+    This module converts between Hanyu Pinyin system and "Indonesian
+    Pinyin". The latter is not really a pinyin system as much as an informal
+    and inaccurate transliteration convention of Mandarin sounds into
+    Indonesian.
+
+    Hanyu Pinyin is getting more popular in Indonesia, but you can still
+    encounter Indonesian transliteration in some places, e.g. in Karaoke
+    video subtitles or old textbooks. Indonesian transliteration is useful
+    for those unfamiliar with both Hanzi characters and Hanyu pinyin.
+
+METHODS
+  new(%opts)
+    Create a new instance. Currently there are no known options.
+
+  hanyu2id($text)
+    Convert Hanyu pinyin to Indonesian pinyin. Pinyins are expected to be
+    written in lowercase. Unknown characters will just be returned as-is.
+
+  id2hanyu($text[, $opts])
+    Convert Indonesian pinyin to Hanyu pinyin. Pinyins are expected to be
+    written in lowercase. Since Indonesian pinyin can be ambiguous (e.g.
+    Mandarin sounds 'ze', 'zhe', 'zhi', 'zi' are usually all transliterated
+    as 'ce'), conversion is not always possible. When this is the case,
+    undef is returned.
+
+    $opts is an optional hashref. If you specify 'list_all'=>1 pair, then
+    instead of undef, all possible Hanyu pinyin alternatives will be listed
+    instead.
+
+  detect($text)
+    Detect Hanyu pinyin or Indonesian pinyin in text. Pinyins are expected
+    to be written in lowercase. Can return "hanyu", "id", "neither", or
+    "ambiguous".
+
+  list_hanyu()
+    Return all Hanyu pinyin syllables.
+
+  list_id()
+    Return all Indonesian transliteration syllables.
+
+SEE ALSO
+    Lingua::ZH::PinyinConvert
+
+    Lingua::Han::PinYin
+
+AUTHOR
+      Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2010 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
