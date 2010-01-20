@@ -10,8 +10,8 @@ WriteMakefile(
   DISTNAME  => 'Lingua-ZH-PinyinConvert-ID',
   NAME      => 'Lingua::ZH::PinyinConvert::ID',
   AUTHOR    => "Steven\ Haryanto\ \<stevenharyanto\@gmail\.com\>",
-  ABSTRACT  => "Convert\ between\ Hanyu\ Pinyin\ and\ Indonesian\ transliteration",
-  VERSION   => '0.02',
+  ABSTRACT  => "Convert\ between\ various\ Chinese\ pinyin\ system\ and\ Indonesian\ transliteration",
+  VERSION   => '0.03',
   EXE_FILES => [ qw() ],
   (eval { ExtUtils::MakeMaker->VERSION(6.31) } ? (LICENSE => 'perl') : ()),
   PREREQ_PM    => {

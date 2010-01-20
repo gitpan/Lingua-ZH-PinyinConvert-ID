@@ -1,5 +1,10 @@
 Revision history for Lingua-ZH-PinyinConvert-ID
 
+0.03     2010-01-20
+         - Add jyutping.
+         - Add option C<remove_tones>.
+         - detect() now returns a list.
+
 0.02     2010-01-18
          Fix example.
 

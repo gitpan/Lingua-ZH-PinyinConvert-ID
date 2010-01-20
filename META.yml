@@ -1,5 +1,5 @@
 ---
-abstract: 'Convert between Hanyu Pinyin and Indonesian transliteration'
+abstract: 'Convert between various Chinese pinyin system and Indonesian transliteration'
 author:
   - 'Steven Haryanto <stevenharyanto@gmail.com>'
 generated_by: 'Dist::Zilla version 1.093400'
@@ -12,4 +12,4 @@ requires:
   Pod::Coverage: 0.18
   Test::More: 0
   Test::Pod::Coverage: 1.08
-version: 0.02
+version: 0.03

@@ -1,74 +1,131 @@
 NAME
-    Lingua::ZH::PinyinConvert::ID - Convert between Hanyu Pinyin and
-    Indonesian transliteration
+    Lingua::ZH::PinyinConvert::ID - Convert between various Chinese pinyin
+    system and Indonesian transliteration
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
         use Lingua::ZH::PinyinConvert::ID;
 
         my $conv = Lingua::ZH::PinyinConvert::ID;
 
-        # convert Hanyu pinyin to Indonesian pinyin
+        # convert Hanyu pinyin to Indonesian transliteration
 
         my $id = $conv->hanyu2id("zhongwen"); # "cungwen"
            $id = $conv->hanyu2id("zhong1 wen2"); # "cung1 wen2"
+           $id = $conv->hanyu2id("zhong1 wen2", {remove_tones=>1}); # "cung wen"
 
-        # convert Indonesian pinyin to Hanyu pinyin, if possible. if
-        # ambiguous, then will return undef.
+        # convert Jyutping (cantonese) to Indonesian transliteration
+
+        my $id = $conv->jyutping2id("zungman"); # "cungman"
+
+        # convert Indonesian transliteration to Hanyu pinyin, if
+        # possible. if ambiguous, then will return undef.
 
         my $hanyu = $conv->id2hanyu("i sheng"); # "yi sheng"
            $hanyu = $conv->id2hanyu("ce"); # undef, ambiguous between ze/zhe/zhi/zi
            $hanyu = $conv->id2hanyu("ce", {list_all=>1}); "(ze|zhe|zhi|zi)"
 
-        # detect Hanyu pinyin or Indonesian pinyin in text. return
-        # "hanyu", "id", "neither", or "ambiguous".
-        print $conv->detect("I love You"); # "neither"
-        print $conv->detect("wo de xin");  # "hanyu"
-        print $conv->detect("wo te sin");  # "id"
-        print $conv->detect("wo ai ni");   # "ambiguous"
+        # convert Indonesian transliteration to Jyutping.
+        my $jyutping = $conv->id2jyutping("ying man"); # "jing man"
+
+        # detect pinyin or Indonesian transliteration in text. return a
+        # list of 0 or more elements, each element being "hanyu",
+        # "jyutping", "id-mandarin", or "id-cantonese".
+        print join ", ", $conv->detect("I love You"); # ""
+        print join ", ", $conv->detect("wo de xin");  # "hanyu"
+        print join ", ", $conv->detect("wo te sin");  # ["jyutping", "id-mandarin", "id-cantonese"]
 
 DESCRIPTION
-    This module converts between Hanyu Pinyin system and "Indonesian
-    Pinyin". The latter is not really a pinyin system as much as an informal
-    and inaccurate transliteration convention of Mandarin sounds into
-    Indonesian.
+    This module converts between various Chinese pinyin systems and
+    Indonesian transliteration. Currently these pinyin systems are
+    supported: Hanyu Pinyin (Mandarin) and Jyutping (Cantonese).
 
-    Hanyu Pinyin is getting more popular in Indonesia, but you can still
-    encounter Indonesian transliteration in some places, e.g. in Karaoke
-    video subtitles or old textbooks. Indonesian transliteration is useful
-    for those unfamiliar with both Hanzi characters and Hanyu pinyin.
+    Indonesian transliteration is admittedly non-standardized and
+    inaccurate, and more and more people are learning Hanyu Pinyin each day,
+    but it is still useful for those who are unfamiliar with Pinyin systems.
+    You can still encounter Indonesian transliteration in some places, e.g.
+    Karaoke video subtitles or old textbooks.
 
 METHODS
   new(%opts)
     Create a new instance. Currently there are no known options.
 
-  hanyu2id($text)
-    Convert Hanyu pinyin to Indonesian pinyin. Pinyins are expected to be
-    written in lowercase. Unknown characters will just be returned as-is.
+  hanyu2id($text[, $opts])
+    Convert Hanyu pinyin to Indonesian transliteration. Pinyins are expected
+    to be written in lowercase. Unknown characters will just be returned
+    as-is.
+
+    $opts is an optional hahref containing options. Known options:
+
+    *   remove_tones => BOOL
+
+        If true, tone numbers will be removed.
+
+  jyutping2id($text[, $opts])
+    Convert Jyutping to Indonesian transliteration. Pinyins are expected to
+    be written in lowercase. Unknown characters will just be returned as-is.
+
+    $opts is an optional hahref containing options. Known options:
+
+    *   remove_tones => BOOL
+
+        If true, tone numbers will be removed.
 
   id2hanyu($text[, $opts])
-    Convert Indonesian pinyin to Hanyu pinyin. Pinyins are expected to be
-    written in lowercase. Since Indonesian pinyin can be ambiguous (e.g.
-    Mandarin sounds 'ze', 'zhe', 'zhi', 'zi' are usually all transliterated
-    as 'ce'), conversion is not always possible. When this is the case,
-    undef is returned.
+    Convert Indonesian transliteration to Hanyu pinyin. Pinyins are expected
+    to be written in lowercase. Since Indonesian transliteration can be
+    ambiguous (e.g. Mandarin sounds 'ze', 'zhe', 'zhi', 'zi' are usually all
+    transliterated as 'ce'), conversion is not always possible. When this is
+    the case, undef is returned.
 
-    $opts is an optional hashref. If you specify 'list_all'=>1 pair, then
-    instead of undef, all possible Hanyu pinyin alternatives will be listed
-    instead.
+    $opts is an optional hahref containing options. Known options:
+
+    *   list_all => BOOL
+
+        If true, then when conversion is ambiguous, instead of returning
+        undef, all alternatives are returneed.
+
+    *   remove_tones => BOOL
+
+        If true, tone numbers will be removed.
+
+  id2jyutping($text[, $opts])
+    Convert Indonesian transliteration to Jyutping. Pinyins are expected to
+    be written in lowercase. Since Indonesian transliteration can be
+    ambiguous (e.g. Cantonese sounds 'kwik' and 'gwik' are sometimes all
+    transliterated as 'kwik'), conversion is not always possible. When this
+    is the case, undef is returned.
+
+    $opts is an optional hahref containing options. Known options:
+
+    *   list_all => BOOL
+
+        If true, then when conversion is ambiguous, instead of returning
+        undef, all alternatives are returneed.
+
+    *   remove_tones => BOOL
+
+        If true, tone numbers will be removed.
 
   detect($text)
-    Detect Hanyu pinyin or Indonesian pinyin in text. Pinyins are expected
-    to be written in lowercase. Can return "hanyu", "id", "neither", or
-    "ambiguous".
+    Detect pinyin or Indonesian transliteration in text. Pinyins are
+    expected to be written in lowercase and separated into words. Return a
+    list of 0 or more elements, each element being "hanyu", "cantonese",
+    "id-mandarin", or "id-cantonese".
 
   list_hanyu()
     Return all Hanyu pinyin syllables.
 
-  list_id()
-    Return all Indonesian transliteration syllables.
+  list_jyutping()
+    Return all Jyutping syllables.
+
+  list_id_mandarin()
+    Return all Indonesian transliteration syllables for Mandarin.
+
+  list_id_cantonese()
+    Return all Indonesian transliteration syllables for Cantonese.
 
 SEE ALSO
     Lingua::ZH::PinyinConvert
