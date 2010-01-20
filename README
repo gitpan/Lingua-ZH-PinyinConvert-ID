@@ -3,7 +3,7 @@ NAME
     Indonesian transliteration
 
 VERSION
-    version 0.01
+    version 0.02
 
 SYNOPSIS
         use Lingua::ZH::PinyinConvert::ID;
@@ -24,10 +24,10 @@ SYNOPSIS
 
         # detect Hanyu pinyin or Indonesian pinyin in text. return
         # "hanyu", "id", "neither", or "ambiguous".
-        print $conv->detect("x"); # "neither"
-        print $conv->detect("wo de xin"); # "hanyu"
-        print $conv->detect("wo de sin"); # "id"
-        print $conv->detect("wo ai ni"); # "ambiguous"
+        print $conv->detect("I love You"); # "neither"
+        print $conv->detect("wo de xin");  # "hanyu"
+        print $conv->detect("wo te sin");  # "id"
+        print $conv->detect("wo ai ni");   # "ambiguous"
 
 DESCRIPTION
     This module converts between Hanyu Pinyin system and "Indonesian

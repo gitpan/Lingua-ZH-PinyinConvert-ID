@@ -1,5 +1,5 @@
 package Lingua::ZH::PinyinConvert::ID;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 # ABSTRACT: Convert between Hanyu Pinyin and Indonesian transliteration
 
 
@@ -547,7 +547,7 @@ Lingua::ZH::PinyinConvert::ID - Convert between Hanyu Pinyin and Indonesian tran
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -569,10 +569,10 @@ version 0.01
 
     # detect Hanyu pinyin or Indonesian pinyin in text. return
     # "hanyu", "id", "neither", or "ambiguous".
-    print $conv->detect("x"); # "neither"
-    print $conv->detect("wo de xin"); # "hanyu"
-    print $conv->detect("wo de sin"); # "id"
-    print $conv->detect("wo ai ni"); # "ambiguous"
+    print $conv->detect("I love You"); # "neither"
+    print $conv->detect("wo de xin");  # "hanyu"
+    print $conv->detect("wo te sin");  # "id"
+    print $conv->detect("wo ai ni");   # "ambiguous"
 
 =head1 DESCRIPTION
 
