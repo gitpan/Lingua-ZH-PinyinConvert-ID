@@ -7,11 +7,6 @@ use Lingua::ZH::PinyinConvert::ID;
 
 my $conv = Lingua::ZH::PinyinConvert::ID->new;
 
-# XXX test remove_tones
-# XXX test detect with option system
-# XXX test jyutping2id, id2jyutping
-# XXX detect now returns list
-
 my @h2i = (
     ["zhong guo", "cung kuo"],
     ["zhong1 guo2", "cung1 kuo2"],

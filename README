@@ -3,7 +3,7 @@ NAME
     system and Indonesian transliteration
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
         use Lingua::ZH::PinyinConvert::ID;
@@ -35,7 +35,7 @@ SYNOPSIS
         # "jyutping", "id-mandarin", or "id-cantonese".
         print join ", ", $conv->detect("I love You"); # ""
         print join ", ", $conv->detect("wo de xin");  # "hanyu"
-        print join ", ", $conv->detect("wo te sin");  # ["jyutping", "id-mandarin", "id-cantonese"]
+        print join ", ", $conv->detect("wo te sin");  # "jyutping", "id-mandarin", "id-cantonese"
 
 DESCRIPTION
     This module converts between various Chinese pinyin systems and
@@ -133,10 +133,10 @@ SEE ALSO
     Lingua::Han::PinYin
 
 AUTHOR
-      Steven Haryanto <stevenharyanto@gmail.com>
+    Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2010 by Steven Haryanto.
+    This software is copyright (c) 2013 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

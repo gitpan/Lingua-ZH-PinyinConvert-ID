@@ -1,10 +1,10 @@
 package Lingua::ZH::PinyinConvert::ID;
-our $VERSION = '0.03';
-# ABSTRACT: Convert between various Chinese pinyin system and Indonesian transliteration
 
-
+use 5.010001;
 use strict;
 use warnings;
+
+our $VERSION = '0.04'; # VERSION
 
 # notes:
 
@@ -1152,13 +1152,10 @@ my $idcant_re = join("|", sort { length($b) <=> length($a) } keys %id2jy); $idca
 my %all = (%hy2id, %jy2id, %id2hy, %id2jy);
 my $all_re = join("|", sort { length($b) <=> length($a) } keys %all); $all_re = qr/(?:$all_re)/;
 
-
-
 sub new {
     my ($class, %opts) = @_;
     bless {}, $class;
 }
-
 
 sub hanyu2id {
     my ($self, $text, $opts) = @_;
@@ -1174,7 +1171,6 @@ sub hanyu2id {
     $text;
 }
 
-
 sub jyutping2id {
     my ($self, $text, $opts) = @_;
     if (!defined($opts)) { $opts = {} }
@@ -1188,7 +1184,6 @@ sub jyutping2id {
     $text =~ s/\b((?:$jy_re[123456]?)+)\b/$sub1->($1)/eg;
     $text;
 }
-
 
 sub id2hanyu {
     my ($self, $text, $opts) = @_;
@@ -1212,7 +1207,6 @@ sub id2hanyu {
     $@ ? undef : $text;
 }
 
-
 sub id2jyutping {
     my ($self, $text, $opts) = @_;
     if (!defined($opts)) { $opts = {} }
@@ -1234,7 +1228,6 @@ sub id2jyutping {
     };
     $@ ? undef : $text;
 }
-
 
 sub detect {
     my ($self, $text) = @_;
@@ -1289,34 +1282,31 @@ sub detect {
     @res;
 }
 
-
 sub list_hanyu {
     my ($self) = @_;
     sort keys %hy2id;
 }
-
 
 sub list_jyutping {
     my ($self) = @_;
     sort keys %jy2id;
 }
 
-
 sub list_id_mandarin {
     my ($self) = @_;
     sort keys %id2hy;
 }
-
 
 sub list_id_cantonese {
     my ($self) = @_;
     sort keys %id2jy;
 }
 
-
 1;
+# ABSTRACT: Convert between various Chinese pinyin system and Indonesian transliteration
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -1325,7 +1315,7 @@ Lingua::ZH::PinyinConvert::ID - Convert between various Chinese pinyin system an
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -1358,7 +1348,7 @@ version 0.03
     # "jyutping", "id-mandarin", or "id-cantonese".
     print join ", ", $conv->detect("I love You"); # ""
     print join ", ", $conv->detect("wo de xin");  # "hanyu"
-    print join ", ", $conv->detect("wo te sin");  # ["jyutping", "id-mandarin", "id-cantonese"]
+    print join ", ", $conv->detect("wo te sin");  # "jyutping", "id-mandarin", "id-cantonese"
 
 =head1 DESCRIPTION
 
@@ -1386,7 +1376,7 @@ returned as-is.
 
 C<$opts> is an optional hahref containing options. Known options:
 
-=over 4
+=over
 
 =item * remove_tones => BOOL
 
@@ -1402,7 +1392,7 @@ as-is.
 
 C<$opts> is an optional hahref containing options. Known options:
 
-=over 4
+=over
 
 =item * remove_tones => BOOL
 
@@ -1420,7 +1410,7 @@ possible. When this is the case, undef is returned.
 
 C<$opts> is an optional hahref containing options. Known options:
 
-=over 4
+=over
 
 =item * list_all => BOOL
 
@@ -1443,7 +1433,7 @@ this is the case, undef is returned.
 
 C<$opts> is an optional hahref containing options. Known options:
 
-=over 4
+=over
 
 =item * list_all => BOOL
 
@@ -1487,14 +1477,13 @@ L<Lingua::Han::PinYin>
 
 =head1 AUTHOR
 
-  Steven Haryanto <stevenharyanto@gmail.com>
+Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Steven Haryanto.
+This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
